@@ -31,3 +31,28 @@ body {
   height: 400px;
   overflow-y: auto;
 }
+
+.MuiList-root.scroller {
+  padding-right: 20px;
+  scrollbar-color: #006ded #fff;
+  scrollbar-width: thin;
+}
+
+.MuiList-root.scroller::-webkit-scrollbar {
+  height: 100%;
+  width: 2px;
+  background-color: transparent;
+}
+
+.MuiList-root.scroller::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.MuiList-root.scroller::-webkit-scrollbar-thumb {
+  background-color: #828282;
+  border-radius: 20px 0px 0px 20px;
+}
+
+.scroller::-webkit-scrollbar-track {
+  border-radius: 20px 0px 0px 20px;
+}

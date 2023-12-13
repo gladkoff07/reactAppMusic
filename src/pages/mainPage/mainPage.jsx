@@ -1,19 +1,6 @@
-import {
-  Avatar,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Input,
-  Link,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material/";
+import { Container, Grid, Input, List } from "@mui/material/";
 import tracksList from "../../assets/tracksList";
-import { PlayArrow } from "@mui/icons-material";
+import { Track } from "../../components/track/track";
 
 export const MainPage = () => {
   return (
@@ -25,33 +12,13 @@ export const MainPage = () => {
       >
         <Input placeholder='Search...' />
         <br />
-        <List>
-          {tracksList.map((item) => {
+        <List className='scroller'>
+          {tracksList.map((track) => {
             return (
-              <>
-                <ListItem key={item.id}>
-                  <Button>
-                    <PlayArrow />
-                  </Button>
-                  <ListItemAvatar>
-                    <Avatar variant='rounded'>
-                      <img
-                        src={item.preview}
-                        alt=''
-                      />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item.title}
-                    secondary={item.artists}
-                  />
-                  <ListItemText
-                    primary={item.duration}
-                    classes='text-duration'
-                  />
-                </ListItem>
-                <Divider />
-              </>
+              <Track
+                key={track.id}
+                {...track}
+              />
             );
           })}
         </List>
