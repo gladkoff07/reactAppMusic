@@ -1,8 +1,29 @@
 import { Container, Grid, Input, List } from "@mui/material/";
 import tracksList from "../../assets/tracksList";
 import { Track } from "../../components/track/track";
+import { useState } from "react";
+
+const runSerach = (query) => {
+  if (!query) {
+    return tracksList;
+  }
+  const lowerCaseQuery = query.toLowerCase();
+
+  return tracksList.filter(
+    (track) =>
+      track.title.toLocaleLowerCase().includes(lowerCaseQuery) ||
+      track.artists.toLocaleLowerCase().includes(lowerCaseQuery)
+  );
+};
 
 export const MainPage = () => {
+  const [tracks, setTracks] = useState(tracksList);
+
+  const handleChange = (event) => {
+    const foundTracks = runSerach(event.target.value);
+    setTracks(foundTracks);
+  };
+
   return (
     <Container maxWidth='sm'>
       <Grid
@@ -10,10 +31,13 @@ export const MainPage = () => {
         direction='column'
         justifyContent='center'
       >
-        <Input placeholder='Search...' />
+        <Input
+          placeholder='Search tracks'
+          onChange={handleChange}
+        />
         <br />
         <List className='scroller'>
-          {tracksList.map((track) => {
+          {tracks.map((track) => {
             return (
               <Track
                 key={track.id}

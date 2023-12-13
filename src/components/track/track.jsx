@@ -1,6 +1,6 @@
 import {
   Avatar,
-  Button,
+  IconButton,
   Divider,
   ListItem,
   ListItemAvatar,
@@ -8,15 +8,17 @@ import {
 } from "@mui/material/";
 import { PlayArrow } from "@mui/icons-material";
 import style from "./track.module.css";
+import secondsToMMSS from "../../utils/secondsToMMSS";
 
 export const Track = (track) => {
   const { preview, title, artists, duration } = track;
+  const formattedDuration = secondsToMMSS(duration);
   return (
     <>
       <ListItem>
-        <Button>
+        <IconButton>
           <PlayArrow />
-        </Button>
+        </IconButton>
         <ListItemAvatar>
           <Avatar variant='rounded'>
             <img
@@ -30,7 +32,7 @@ export const Track = (track) => {
           secondary={artists}
         />
         <ListItemText
-          primary={duration}
+          primary={formattedDuration}
           className={style["text-duration"]}
         />
       </ListItem>
