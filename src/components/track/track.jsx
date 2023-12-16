@@ -6,7 +6,7 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@mui/material/";
-import { PlayArrow } from "@mui/icons-material";
+import { PlayArrow, Pause } from "@mui/icons-material";
 import style from "./track.module.css";
 import secondsToMMSS from "../../utils/secondsToMMSS";
 import { useContext } from "react";
@@ -15,13 +15,15 @@ import { AudioContext } from "../../context/audioContext";
 export const Track = (track) => {
   const { preview, title, artists, duration } = track;
   const formattedDuration = secondsToMMSS(duration);
-  const { handleToggleAudio } = useContext(AudioContext);
+  const { handleToggleAudio, currentTrack, isPlaying } =
+    useContext(AudioContext);
+  const isCurrentTrack = currentTrack.id === track.id;
 
   return (
     <>
-      <ListItem>
+      <ListItem className={isCurrentTrack && style.playing}>
         <IconButton onClick={() => handleToggleAudio(track)}>
-          <PlayArrow />
+          {isCurrentTrack && isPlaying ? <Pause /> : <PlayArrow />}
         </IconButton>
         <ListItemAvatar>
           <Avatar variant='rounded'>
