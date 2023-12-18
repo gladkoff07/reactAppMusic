@@ -21,7 +21,7 @@ export const Track = (track) => {
 
   return (
     <>
-      <ListItem className={isCurrentTrack && style.playing}>
+      <ListItem className={isCurrentTrack ? style.playing : ""}>
         <IconButton onClick={() => handleToggleAudio(track)}>
           {isCurrentTrack && isPlaying ? <Pause /> : <PlayArrow />}
         </IconButton>
