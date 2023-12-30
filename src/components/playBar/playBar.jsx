@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Slider } from "@mui/material";
 import { useContext } from "react";
 import { AudioContext } from "../../context/audioContext";
 import {
@@ -26,11 +26,16 @@ export const PlayBar = () => {
         bottom: 0,
         height: 70,
         display: "flex",
+        justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#9340fe",
+        color: "#fff",
       }}
     >
-      <IconButton onClick={() => handleToggleAudio(currentTrack)}>
+      <IconButton
+        onClick={() => handleToggleAudio(currentTrack)}
+        style={{ color: "#fff" }}
+      >
         {isPlaying ? <Pause /> : <PlayArrow />}
       </IconButton>
       <ListItemAvatar>
@@ -44,8 +49,30 @@ export const PlayBar = () => {
       <ListItemText
         primary={title}
         secondary={artists}
+        style={{ flex: "0 0 auto" }}
       />
-      <ListItemText primary={formattedDuration} />
+      <Box
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "20%",
+          padding: "0 30px",
+        }}
+      >
+        <ListItemText
+          primary='00:00'
+          style={{ minWidth: "auto" }}
+        />
+        <Slider
+          step={1}
+          start={0}
+          style={{ margin: "0 20px", color: "#fff" }}
+        />
+        <ListItemText
+          primary={formattedDuration}
+          style={{ minWidth: "auto" }}
+        />
+      </Box>
     </Box>
   );
 };
