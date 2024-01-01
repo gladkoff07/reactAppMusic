@@ -13,6 +13,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 #root {
@@ -28,7 +29,7 @@ body {
 }
 
 .MuiList-root {
-  height: 400px;
+  height: 430px;
   overflow-y: auto;
 }
 

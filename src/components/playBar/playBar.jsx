@@ -1,5 +1,5 @@
 import { Box, Slider } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AudioContext } from "../../context/audioContext";
 import {
   Avatar,
@@ -11,11 +11,28 @@ import { PlayArrow, Pause } from "@mui/icons-material";
 import secondsToMMSS from "../../utils/secondsToMMSS";
 
 export const PlayBar = () => {
-  const { currentTrack, isPlaying, handleToggleAudio } =
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const { audio, currentTrack, isPlaying, handleToggleAudio } =
     useContext(AudioContext);
 
   const { title, artists, preview, duration } = currentTrack;
+
   const formattedDuration = secondsToMMSS(duration);
+  const formattedCurrentTime = secondsToMMSS(currentTime);
+  const sliderCurrentTime = Math.round((currentTime / duration) * 100);
+
+  const handleChangeCurrentTime = (_, value) => {
+    const time = Math.round((value / 100) * duration);
+    setCurrentTime(time);
+    audio.currentTime = time;
+  };
+
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      setCurrentTime(audio.currentTime);
+    }, 1000);
+  }, []);
 
   return (
     <Box
@@ -24,7 +41,8 @@ export const PlayBar = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        height: 70,
+        height: "70px",
+        padding: "0 5%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -32,20 +50,21 @@ export const PlayBar = () => {
         color: "#fff",
       }}
     >
+      <Avatar
+        variant='rounded'
+        style={{ width: "50px", height: "50px" }}
+      >
+        <img
+          src={preview}
+          alt=''
+        />
+      </Avatar>
       <IconButton
         onClick={() => handleToggleAudio(currentTrack)}
-        style={{ color: "#fff" }}
+        style={{ color: "#fff", margin: "0 1%" }}
       >
         {isPlaying ? <Pause /> : <PlayArrow />}
       </IconButton>
-      <ListItemAvatar>
-        <Avatar variant='rounded'>
-          <img
-            src={preview}
-            alt=''
-          />
-        </Avatar>
-      </ListItemAvatar>
       <ListItemText
         primary={title}
         secondary={artists}
@@ -55,17 +74,20 @@ export const PlayBar = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          width: "20%",
+          width: "40%",
           padding: "0 30px",
         }}
       >
         <ListItemText
-          primary='00:00'
+          primary={formattedCurrentTime}
           style={{ minWidth: "auto" }}
         />
         <Slider
           step={1}
-          start={0}
+          min={0}
+          max={100}
+          value={sliderCurrentTime}
+          onChange={handleChangeCurrentTime}
           style={{ margin: "0 20px", color: "#fff" }}
         />
         <ListItemText
