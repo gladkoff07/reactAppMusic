@@ -4,5 +4,10 @@ div.text-duration {
 }
 
 .playing {
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: #9340fe;
+  color: #fff;
+}
+
+.playing svg {
+  fill: #fff;
 }

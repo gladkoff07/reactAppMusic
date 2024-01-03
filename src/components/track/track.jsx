@@ -25,7 +25,7 @@ export const Track = (track) => {
         <IconButton onClick={() => handleToggleAudio(track)}>
           {isCurrentTrack && isPlaying ? <Pause /> : <PlayArrow />}
         </IconButton>
-        <ListItemAvatar>
+        <ListItemAvatar style={{ marginLeft: "2%" }}>
           <Avatar variant='rounded'>
             <img
               src={preview}

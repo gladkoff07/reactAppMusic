@@ -10,13 +10,12 @@ import {
 import { PlayArrow, Pause } from "@mui/icons-material";
 import secondsToMMSS from "../../utils/secondsToMMSS";
 
-export const PlayBar = () => {
+const TimeControl = () => {
   const [currentTime, setCurrentTime] = useState(0);
 
-  const { audio, currentTrack, isPlaying, handleToggleAudio } =
-    useContext(AudioContext);
+  const { audio, currentTrack } = useContext(AudioContext);
 
-  const { title, artists, preview, duration } = currentTrack;
+  const { duration } = currentTrack;
 
   const formattedDuration = secondsToMMSS(duration);
   const formattedCurrentTime = secondsToMMSS(currentTime);
@@ -32,7 +31,45 @@ export const PlayBar = () => {
     const timeInterval = setInterval(() => {
       setCurrentTime(audio.currentTime);
     }, 1000);
+
+    return () => {
+      clearInterval(timeInterval);
+    };
   }, []);
+
+  return (
+    <Box
+      style={{
+        display: "flex",
+        alignItems: "center",
+        width: "40%",
+        padding: "0 30px",
+      }}
+    >
+      <ListItemText
+        primary={formattedCurrentTime}
+        style={{ minWidth: "auto" }}
+      />
+      <Slider
+        step={1}
+        min={0}
+        max={100}
+        value={sliderCurrentTime}
+        onChange={handleChangeCurrentTime}
+        style={{ margin: "0 20px", color: "#fff" }}
+      />
+      <ListItemText
+        primary={formattedDuration}
+        style={{ minWidth: "auto" }}
+      />
+    </Box>
+  );
+};
+
+export const PlayBar = () => {
+  const { currentTrack, isPlaying, handleToggleAudio } =
+    useContext(AudioContext);
+  const { title, artists, preview } = currentTrack;
 
   return (
     <Box
@@ -70,31 +107,7 @@ export const PlayBar = () => {
         secondary={artists}
         style={{ flex: "0 0 auto" }}
       />
-      <Box
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "40%",
-          padding: "0 30px",
-        }}
-      >
-        <ListItemText
-          primary={formattedCurrentTime}
-          style={{ minWidth: "auto" }}
-        />
-        <Slider
-          step={1}
-          min={0}
-          max={100}
-          value={sliderCurrentTime}
-          onChange={handleChangeCurrentTime}
-          style={{ margin: "0 20px", color: "#fff" }}
-        />
-        <ListItemText
-          primary={formattedDuration}
-          style={{ minWidth: "auto" }}
-        />
-      </Box>
+      <TimeControl />
     </Box>
   );
 };
